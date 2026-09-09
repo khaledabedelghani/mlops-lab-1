@@ -129,7 +129,7 @@ The "data" folder itself is ignored by Git using ".gitignore".
 
 
 
-On DagsHub, the data can be viewed through the DVC integration. I can see the "food11_raw" folder with the "training", "evaluation", and "validation" folders and their images.
+On DagsHub, the data can be viewed through the DVC integration. I can see the "food11_raw", "food11_processed", and "food11_processed_mini" folders with their data.
 
 
 
