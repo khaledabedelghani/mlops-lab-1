@@ -49,6 +49,10 @@ After running "dvc init", DVC created a ".dvc" folder and a ".dvcignore" file.
 The ".dvc/config", ".dvc/.gitignore", and ".dvcignore" files should be pushed to Git. Temporary files such as ".dvc/tmp/" should stay local.
 
 
+
+
+
+
 \## Question 3
 
 
@@ -66,6 +70,8 @@ Other options are "--local", which stores the configuration only for the current
 
 
 Credentials should not be pushed to GitHub because they contain sensitive information such as the username and access token.
+
+
 
 
 
@@ -101,9 +107,7 @@ Yes, a "data.dvc" file was created. It does not contain the dataset itself. It c
 
 
 
-In the current version, it points to the "data" folder and tracks 99 files.
-
-
+At the first "dvc add", it tracked 16643 files. Later, after reducing the dataset for the lab and creating the processed datasets, the current version tracks 99 files.
 
 
 
