@@ -61,7 +61,7 @@ Because "--global" was used, the credentials are stored in the global DVC config
 
 
 
-Another option is "--local", which stores the credentials only for the current project.
+Other options are "--local", which stores the configuration only for the current project, "--system", which stores it at the system level, or using no option to store normal project configuration in ".dvc/config".
 
 
 
@@ -101,7 +101,7 @@ Yes, a "data.dvc" file was created. It does not contain the dataset itself. It c
 
 
 
-In this case, it points to the "data" folder and tracks 16643 files.
+In the current version, it points to the "data" folder and tracks 99 files.
 
 
 
@@ -127,7 +127,7 @@ On DagsHub, the data can be viewed through the DVC integration. I can see the "f
 
 
 
-The project code files are not on GitHub yet because they have not been committed yet.
+The project code is stored on GitHub, while the actual dataset is managed by DVC and stored through DagsHub.
 
 
 

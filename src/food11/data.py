@@ -8,6 +8,20 @@ MINI_DIR = Path("data/food11_processed_mini")
 
 SPLITS = ["training", "evaluation", "validation"]
 
+CATEGORY_NAMES = {
+    "0": "Bread",
+    "1": "Dairy product",
+    "2": "Dessert",
+    "3": "Egg",
+    "4": "Fried food",
+    "5": "Meat",
+    "6": "Noodles-Pasta",
+    "7": "Rice",
+    "8": "Seafood",
+    "9": "Soup",
+    "10": "Vegetable-Fruit",
+}
+
 
 def prepare_folder(folder):
     if folder.exists():
@@ -21,11 +35,11 @@ def process_images():
 
     for split in SPLITS:
         source_folder = RAW_DIR / split
-
         class_counts = {}
 
         for image_path in source_folder.glob("*.jpg"):
-            class_name = image_path.stem.split("_")[0]
+            class_id = image_path.stem.split("_")[0]
+            class_name = CATEGORY_NAMES[class_id]
 
             processed_class = PROCESSED_DIR / split / class_name
             mini_class = MINI_DIR / split / class_name
