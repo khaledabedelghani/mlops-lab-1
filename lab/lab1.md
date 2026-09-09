@@ -1,12 +1,12 @@
-\# Lab 1 - Git/DVC and Data Preparation
+# Lab 1 - Git/DVC and Data Preparation
 
 
 
-\## Question 1
+## Question 1
 
 
 
-\*\*Observe the files created by "uv init". What do you think they contain?\*\*
+**Observe the files created by "uv init". What do you think they contain?**
 
 
 
@@ -14,21 +14,21 @@ After running "uv init", it created the basic structure of the Python project.
 
 
 
-\- "src/" is where the Python source code of the project will be written.
+- "src/" is where the Python source code of the project will be written.
 
-\- ".python-version" specifies the Python version used by the project.
+- ".python-version" specifies the Python version used by the project.
 
-\- "pyproject.toml" contains information about the project and its dependencies.
+- "pyproject.toml" contains information about the project and its dependencies.
 
-\- "README.md" is used to document and explain the project.
-
-
-
-\## Question 2
+- "README.md" is used to document and explain the project.
 
 
 
-\*\*What are the created files? What do you think they are used for? And which ones should be pushed to Git?\*\*
+## Question 2
+
+
+
+**What are the created files? What do you think they are used for? And which ones should be pushed to Git?**
 
 
 
@@ -36,13 +36,13 @@ After running "dvc init", DVC created a ".dvc" folder and a ".dvcignore" file.
 
 
 
-\- ".dvc/config" contains the DVC project configuration.
+- ".dvc/config" contains the DVC project configuration.
 
-\- ".dvc/.gitignore" tells Git which local DVC files should not be tracked.
+- ".dvc/.gitignore" tells Git which local DVC files should not be tracked.
 
-\- ".dvc/tmp/" contains temporary files used by DVC.
+- ".dvc/tmp/" contains temporary files used by DVC.
 
-\- ".dvcignore" tells DVC which files or folders it should ignore.
+- ".dvcignore" tells DVC which files or folders it should ignore.
 
 
 
@@ -53,11 +53,11 @@ The ".dvc/config", ".dvc/.gitignore", and ".dvcignore" files should be pushed to
 
 
 
-\## Question 3
+## Question 3
 
 
 
-\*\*Where are the credentials stored? And what are the options other than "--global"? Should the credentials be pushed to GitHub?\*\*
+**Where are the credentials stored? And what are the options other than "--global"? Should the credentials be pushed to GitHub?**
 
 
 
@@ -77,11 +77,11 @@ Credentials should not be pushed to GitHub because they contain sensitive inform
 
 
 
-\## Question 4
+## Question 4
 
 
 
-\*\*Take a look at the ".gitignore" file. Explain what happened.\*\*
+**Take a look at the ".gitignore" file. Explain what happened.**
 
 
 
@@ -95,11 +95,11 @@ After running "dvc add data", DVC added "/data" to the ".gitignore" file. This p
 
 
 
-\## Question 5
+## Question 5
 
 
 
-\*\*Do you see a ".dvc" file? What does it contain?\*\*
+**Do you see a ".dvc" file? What does it contain?**
 
 
 
@@ -115,8 +115,10 @@ At the first "dvc add", it tracked 16643 files. Later, after reducing the datase
 
 
 
-\## Question 6
+## Question 6
 
+
+**You can check your main branch on the GitHub web UI. Is the code there? Is the data there? Do you have any file that points to the data location? And what about DagsHub web UI, do you see the data?**
 
 
 On GitHub, the actual dataset is not stored in the repository. Instead, GitHub contains the "data.dvc" pointer file that describes the tracked data.
@@ -127,7 +129,7 @@ The "data" folder itself is ignored by Git using ".gitignore".
 
 
 
-On DagsHub, the data can be viewed through the DVC integration. I can see the "food11\_raw" folder with the "training", "evaluation", and "validation" folders and their images.
+On DagsHub, the data can be viewed through the DVC integration. I can see the "food11_raw" folder with the "training", "evaluation", and "validation" folders and their images.
 
 
 
@@ -139,8 +141,11 @@ The project code is stored on GitHub, while the actual dataset is managed by DVC
 
 
 
-\## Question 7
+## Question 7
 
+
+
+**In a completely new temporary folder, clone your GitHub repo. Do you see the data folder? What DVC command is needed to get the data folder?**
 
 
 After cloning the GitHub repository in a new folder, the "data" folder was not there because Git only cloned the DVC pointer file.
@@ -169,11 +174,14 @@ After that, the "data" folder was restored with the "training", "evaluation", an
 
 
 
-\## Question 8
+## Question 8
 
 
 
-No. After checking out the older Git commit and running "dvc checkout", the new "food11\_processed" and "food11\_processed\_mini" folders were no longer there. Only the older "food11\_raw" data remained.
+**Do you still see the new folders you created, "food11_processed" and "food11_processed_mini"?**
+
+
+No. After checking out the older Git commit and running "dvc checkout", the new "food11_processed" and "food11_processed_mini" folders were no longer there. Only the older "food11_raw" data remained.
 
 
 
