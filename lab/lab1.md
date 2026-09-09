@@ -165,6 +165,24 @@ After that, the "data" folder was restored with the "training", "evaluation", an
 
 
 
+\## Question 8
+
+
+
+No. After checking out the older Git commit and running "dvc checkout", the new "food11\_processed" and "food11\_processed\_mini" folders were no longer there. Only the older "food11\_raw" data remained.
+
+
+
+After returning to "main" and running "dvc checkout" again, the processed folders appeared again.
+
+
+
+
+
+
+
+
+
 
 
 
