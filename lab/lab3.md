@@ -63,3 +63,5 @@ The Docker image currently exists only on the local machine.
 Before another machine, CI runner, or Kubernetes cluster can reliably run the exact image, the image should be pushed to a container registry such as Docker Hub or another registry.
 
 A versioned or immutable tag should be used, and preferably the image should be referenced by its SHA256 digest so the exact same image can be pulled.
+
+Because the model is fetched at runtime, the other machine must also be able to reach the MLflow tracking server and its artifact store.
