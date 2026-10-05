@@ -4,7 +4,7 @@
 
 
 
-Question 1
+**Question 1**
 
 
 
@@ -22,7 +22,7 @@ Stopping the container does not delete the data, but removing the container remo
 
 
 
-Question 2
+**Question 2**
 
 
 
@@ -44,7 +44,7 @@ A bind mount would also work and would also persist the data, but it would be ti
 
 
 
-Question 3
+**Question 3**
 
 
 
@@ -66,7 +66,7 @@ Therefore, the hostname "mlflow" automatically resolves to the MLflow container,
 
 
 
-Question 4
+**Question 4**
 
 
 
@@ -88,7 +88,7 @@ If the frontend is run by itself outside Docker Compose, another URL such as "ht
 
 
 
-Question 5
+**Question 5**
 
 
 
@@ -110,7 +110,7 @@ The frontend and inference containers are connected to the same Docker Compose n
 
 
 
-Question 6
+**Question 6**
 
 
 
@@ -136,7 +136,7 @@ A more robust solution would use a health check or retry mechanism.
 
 
 
-Question 7
+**Question 7**
 
 
 
@@ -162,7 +162,7 @@ This matches the configuration in "docker-compose.yml".
 
 
 
-Question 8
+**Question 8**
 
 
 
@@ -200,7 +200,7 @@ In our test, version 2 was created by re-registering the same run, so the predic
 
 
 
-Question 9
+**Question 9**
 
 
 
@@ -226,7 +226,7 @@ Therefore, restarting the inference service is enough to load the model version 
 
 
 
-Question 10
+**Question 10**
 
 
 
@@ -260,7 +260,7 @@ After starting the stack again, the MLflow model registry was empty.
 
 
 
-Question 11
+**Question 11**
 
 
 
@@ -277,6 +277,7 @@ To run several inference replicas across multiple machines with load balancing a
 
 
 MLflow would also need an external or shared persistent database and artifact storage so that its data is not tied to one machine and can survive a machine failure.
+
 
 
 
