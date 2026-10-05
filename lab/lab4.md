@@ -1,14 +1,14 @@
-\*\*Lab 4 - Orchestrating the app with Docker Compose\*\*
+﻿**Lab 4 - Orchestrating the app with Docker Compose**
 
 
 
 
 
-\*\*Question 1\*\*
+**Question 1**
 
 
 
-\*\*What happens to everything written to "/mlflow-data" if you never mount a volume there and just "docker run" this image standalone? Try it: run the container, register nothing, stop it, remove it, start a new one from the same image - what do you see in the UI?\*\*
+**What happens to everything written to "/mlflow-data" if you never mount a volume there and just "docker run" this image standalone? Try it: run the container, register nothing, stop it, remove it, start a new one from the same image - what do you see in the UI?**
 
 
 
@@ -22,11 +22,11 @@ Stopping the container does not delete the data, but removing the container remo
 
 
 
-\*\*Question 2\*\*
+**Question 2**
 
 
 
-\*\*Why a named volume here instead of a bind mount to a folder in your repo? Would a bind mount work just as well?\*\*
+**Why a named volume here instead of a bind mount to a folder in your repo? Would a bind mount work just as well?**
 
 
 
@@ -44,11 +44,11 @@ A bind mount would also work and would also persist the data, but it would be ti
 
 
 
-\*\*Question 3\*\*
+**Question 3**
 
 
 
-\*\*In Lab 3 you had to use "host.docker.internal" or "--network host" to reach MLflow from inside the container. In this lab, "MLFLOW\_TRACKING\_URI" is "http://mlflow:5000". Why does that hostname resolve now when it didn't before?\*\*
+**In Lab 3 you had to use "host.docker.internal" or "--network host" to reach MLflow from inside the container. In this lab, "MLFLOW\_TRACKING\_URI" is "http://mlflow:5000". Why does that hostname resolve now when it didn't before?**
 
 
 
@@ -66,11 +66,11 @@ Therefore, the hostname `mlflow` automatically resolves to the MLflow container,
 
 
 
-\*\*Question 4\*\*
+**Question 4**
 
 
 
-\*\*Why does the frontend read "INFERENCE\_URL" from an environment variable instead of hardcoding "http://inference:8000"?\*\*
+**Why does the frontend read "INFERENCE\_URL" from an environment variable instead of hardcoding "http://inference:8000"?**
 
 
 
@@ -88,11 +88,11 @@ If the frontend is run by itself outside Docker Compose, another URL such as `ht
 
 
 
-\*\*Question 5\*\*
+**Question 5**
 
 
 
-\*\*Only "mlflow" and "frontend" publish a port to the host. "inference" doesn't. Why not, and how does the frontend still reach it?\*\*
+**Only "mlflow" and "frontend" publish a port to the host. "inference" doesn't. Why not, and how does the frontend still reach it?**
 
 
 
@@ -110,11 +110,11 @@ The frontend and inference containers are connected to the same Docker Compose n
 
 
 
-\*\*Question 6\*\*
+**Question 6**
 
 
 
-\*\*"depends\_on" here only waits for the MLflow container process to start, not for the tracking server inside it to be ready. If "serve.py" tries to load the model at startup and MLflow isn't ready yet, what happens to the inference container?\*\*
+**"depends\_on" here only waits for the MLflow container process to start, not for the tracking server inside it to be ready. If "serve.py" tries to load the model at startup and MLflow isn't ready yet, what happens to the inference container?**
 
 
 
@@ -136,11 +136,11 @@ A more robust solution would use a health check or retry mechanism.
 
 
 
-\*\*Question 7\*\*
+**Question 7**
 
 
 
-\*\*Run "docker compose ps". Which services have a published port listed, and which don't? Does that match what you'd expect from the "docker-compose.yml"?\*\*
+**Run "docker compose ps". Which services have a published port listed, and which don't? Does that match what you'd expect from the "docker-compose.yml"?**
 
 
 
@@ -162,11 +162,11 @@ This matches the configuration in `docker-compose.yml`.
 
 
 
-\*\*Question 8\*\*
+**Question 8**
 
 
 
-\*\*Refresh the frontend and upload an image again. Does the prediction come from the new model version, or the old one? What command lets you pick up the new model version without rebuilding any image?\*\*
+**Refresh the frontend and upload an image again. Does the prediction come from the new model version, or the old one? What command lets you pick up the new model version without rebuilding any image?**
 
 
 
@@ -200,11 +200,11 @@ In our test, version 2 was created by re-registering the same run, so the predic
 
 
 
-\*\*Question 9\*\*
+**Question 9**
 
 
 
-\*\*Why does "restart" alone work here - no rebuild needed? What does that tell you about what's baked into the inference image versus fetched at container startup?\*\*
+**Why does "restart" alone work here - no rebuild needed? What does that tell you about what's baked into the inference image versus fetched at container startup?**
 
 
 
@@ -226,11 +226,11 @@ Therefore, restarting the inference service is enough to load the model version 
 
 
 
-\*\*Question 10\*\*
+**Question 10**
 
 
 
-\*\*Is your registered model and its assignment still there after the "docker compose down" / "docker compose up" cycle? What happens with "docker compose down -v"?\*\*
+**Is your registered model and its assignment still there after the "docker compose down" / "docker compose up" cycle? What happens with "docker compose down -v"?**
 
 
 
@@ -260,11 +260,11 @@ After starting the stack again, the MLflow model registry was empty.
 
 
 
-\*\*Question 11\*\*
+**Question 11**
 
 
 
-\*\*This compose file is still meant to run on one machine. What would have to change for the inference service to run as three replicas behind a load balancer, or for the MLflow service to survive a machine failure?\*\*
+**This compose file is still meant to run on one machine. What would have to change for the inference service to run as three replicas behind a load balancer, or for the MLflow service to survive a machine failure?**
 
 
 
@@ -277,4 +277,5 @@ To run several inference replicas across multiple machines with load balancing a
 
 
 MLflow would also need an external or shared persistent database and artifact storage so that its data is not tied to one machine and can survive a machine failure.
+
 
