@@ -1,6 +1,7 @@
-from pathlib import Path
-from PIL import Image
 import shutil
+from pathlib import Path
+
+from PIL import Image
 
 RAW_DIR = Path("data/food11_raw")
 PROCESSED_DIR = Path("data/food11_processed")
@@ -22,6 +23,19 @@ CATEGORY_NAMES = {
     "10": "Vegetable-Fruit",
 }
 
+CLASSES = [CATEGORY_NAMES[str(i)] for i in range(11)]
+
+
+def category_from_filename(filename: str) -> str:
+    """Return the food category from the image filename."""
+    class_id = Path(filename).stem.split("_")[0]
+    return CATEGORY_NAMES[class_id]
+
+
+def resize_image(img: Image.Image, size: int = 128) -> Image.Image:
+    """Return an RGB image resized to size x size."""
+    return img.convert("RGB").resize((size, size))
+
 
 def prepare_folder(folder):
     if folder.exists():
@@ -38,8 +52,7 @@ def process_images():
         class_counts = {}
 
         for image_path in source_folder.glob("*.jpg"):
-            class_id = image_path.stem.split("_")[0]
-            class_name = CATEGORY_NAMES[class_id]
+            class_name = category_from_filename(image_path.name)
 
             processed_class = PROCESSED_DIR / split / class_name
             mini_class = MINI_DIR / split / class_name
@@ -48,8 +61,7 @@ def process_images():
             mini_class.mkdir(parents=True, exist_ok=True)
 
             with Image.open(image_path) as image:
-                image = image.convert("RGB")
-                image = image.resize((128, 128))
+                image = resize_image(image)
 
                 output_path = processed_class / image_path.name
                 image.save(output_path)
