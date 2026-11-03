@@ -1,12 +1,13 @@
 import io
 import os
+from typing import Annotated
 
-import mlflow
 import torch
 from fastapi import FastAPI, File, HTTPException, UploadFile
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from torchvision import transforms
 
+import mlflow
 
 MLFLOW_TRACKING_URI = os.getenv(
     "MLFLOW_TRACKING_URI",
@@ -15,9 +16,19 @@ MLFLOW_TRACKING_URI = os.getenv(
 
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 
-model = mlflow.pyfunc.load_model("models:/food11@champion")
+model = None
 
 app = FastAPI()
+
+
+@app.on_event("startup")
+def load_model():
+    global model
+
+    if os.environ.get("SKIP_MODEL"):
+        return
+
+    model = mlflow.pyfunc.load_model("models:/food11@champion")
 
 
 CLASS_NAMES = [
@@ -53,13 +64,21 @@ def health():
 
 
 @app.post("/predict")
-async def predict(file: UploadFile = File(...)):
+async def predict(file: Annotated[UploadFile, File()]):
+    if model is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Model is not loaded",
+        )
+
     try:
         contents = await file.read()
         image = Image.open(io.BytesIO(contents)).convert("RGB")
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid image file")
-
+    except (UnidentifiedImageError, OSError, ValueError) as exc:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid image file",
+        ) from exc
     input_tensor = transform(image).unsqueeze(0)
 
     logits = model.predict(input_tensor.numpy())

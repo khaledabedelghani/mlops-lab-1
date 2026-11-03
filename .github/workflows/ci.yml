@@ -1,0 +1,105 @@
+﻿name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      SKIP_MODEL: "1"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Install Python
+        run: uv python install 3.13
+
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Run Ruff
+        run: uv run ruff check src tests
+
+      - name: Run tests
+        run: uv run pytest -q
+
+  smoke:
+    runs-on: ubuntu-latest
+    needs: test
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t food11:ci .
+
+      - name: Start API container
+        run: |
+          docker run -d --name food11-smoke \
+            -e SKIP_MODEL=1 \
+            -p 8000:8000 \
+            food11:ci
+
+      - name: Check health endpoint
+        run: |
+          for i in {1..30}; do
+            if curl --fail --silent http://localhost:8000/health; then
+              echo
+              echo "Smoke test PASSED"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Smoke test FAILED"
+          exit 1
+
+      - name: Show container logs
+        if: always()
+        run: docker logs food11-smoke || true
+
+      - name: Clean up container
+        if: always()
+        run: docker rm -f food11-smoke || true
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: [test, smoke]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare image name
+        run: |
+          echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:${{ github.sha }}
