@@ -1,4 +1,4 @@
-# Lab 5 – CI/CD with GitHub Actions
+# Lab 5 â€“ CI/CD with GitHub Actions
 
 ## Q1. Why is it a bad idea for a unit test to load the real model from your MLflow server? List at least two ways the test could fail even though your code is correct.
 
@@ -73,7 +73,7 @@ If branch protection is configured and enforced, a pull request with failing req
 
 For a team, automated checks provide a consistent quality gate. Developers no longer need to rely only on everyone remembering to run tests locally.
 
-The branch protection configuration still needs to be verified.
+The Branches settings page showed no classic branch protection rule. On our pull request, the Merge pull request button was available even while the smoke check was still running. This suggests that successful checks are not currently enforced as a mandatory merge requirement. The team should configure required status checks for main using branch protection or a ruleset.
 
 ## Q10. For each candidate, what did the gate decide, and with which numbers? With your test-set size, how many accuracy points does `2 * se` represent?
 
