@@ -1,4 +1,5 @@
 import argparse
+import os
 from pathlib import Path
 
 import mlflow.pytorch
@@ -116,7 +117,7 @@ def main():
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
-    mlflow.set_tracking_uri("http://127.0.0.1:5000")
+    mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "sqlite:///mlflow.db"))
     mlflow.set_experiment("food11")
 
     with mlflow.start_run():
@@ -192,12 +193,15 @@ def main():
             criterion,
             device,
         )
+        mlflow.log_metric("test_accuracy", test_accuracy)
+        mlflow.log_metric("test_samples", len(test_loader.dataset))
 
         mlflow.pytorch.log_model(
             model,
             name="model",
+            registered_model_name="food11",
             serialization_format="pickle",
-)
+        )
 
         print(f"Test accuracy: {test_accuracy:.4f}")
 
