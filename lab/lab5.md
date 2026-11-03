@@ -41,7 +41,7 @@ Empty-commit run (CI/CD #4): 2m 25s.
 
 The workflow uses caching through `astral-sh/setup-uv`. When the dependency cache is reused, dependency installation may become faster because packages do not need to be downloaded again.
 
-The empty-commit run was 4 seconds slower overall. Caching can speed up dependency installation, but runner startup and Docker build times may vary. Individual step durations must be compared to identify whether any step became faster.
+The empty-commit run was 4 seconds slower overall. Run tests became faster (12s to 11s), Run Ruff became faster (1s to 0s), and Install Python became faster (1s to 0s). However, Install dependencies took 5s instead of 4s, and Build Docker image took 77s instead of 76s. Although setup-uv supports caching, this comparison does not show a dependency installation speedup. Small differences may come from runner and build variability.
 
 ## Q7. This answers Question 9 of Lab 3. Why tag with the commit SHA rather than `latest`? Describe a concrete situation where `latest` leads two machines to run different code.
 
