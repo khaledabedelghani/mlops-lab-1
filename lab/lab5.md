@@ -1,4 +1,4 @@
-# Lab 5 â€“ CI/CD with GitHub Actions
+# Lab 5 - CI/CD with GitHub Actions
 
 ## Q1. Why is it a bad idea for a unit test to load the real model from your MLflow server? List at least two ways the test could fail even though your code is correct.
 
